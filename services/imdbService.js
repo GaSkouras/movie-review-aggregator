@@ -20,7 +20,7 @@ async function searchMovieByTitle(title) {
         const response = await axios.get(`${TMDB_BASIC_URL}/search/movie?query=${title}`, options);
         return response.data.results;
     } catch (error) {
-        // console.error(error);
+        console.error(error);
         throw new ClientError('Failed to fetch movie data from TMDB API');
     }
 
@@ -31,7 +31,7 @@ async function searchMovieByID(movieID) {
       const response = await axios.get(`${TMDB_BASIC_URL}/movie/${movieID}`, options);
       return response.data;
   } catch (error) {
-      // console.error(error);
+      console.error(error);
       throw new ClientError('Failed to fetch movie data from TMDB API');
   }
 

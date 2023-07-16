@@ -1,7 +1,7 @@
 const { searchMovieByTitle, fetchMovieReviews, searchMovieByID } = require('../services/imdbService');
-const { Movie, Review, sequelize } = require('../models');
-const pool = require('../database');
-const {MovieNotFoundError, DatabaseWriteError} =  require ("../error.js")
+const { Movie, Review } = require('../models');
+const {MovieNotFoundError} =  require ("../error.js")
+const {createOrUpdateMovie, saveReviews, getMovieWithReviews} = require("../utils/movieUtils")
 
 exports.getMoviesbyTitle = async (req, res, next) => {
     try {
@@ -21,10 +21,11 @@ exports.getMovieReviews = async (req, res, next) => {
   try {
     const { id } = req.params;
     const movieInfo = await searchMovieByID(id);
-    console.log("movieInfo is", movieInfo)
+
     if (!movieInfo) {
       throw new MovieNotFoundError('Movie not found');
     }
+
     const response = await fetchMovieReviews(id);
     const reviews = response.results;
 
@@ -39,15 +40,19 @@ exports.getMovieReviews = async (req, res, next) => {
 
     res.json(movieWithReviews);
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
 
 exports.getLocalMovieByID = async (req, res, next) => {
+  try {
     const { id } = req.params;
-    console.log(id)
+
+    const field = typeof id === 'number' || !isNaN(parseInt(id)) ? 'tmdbID' : 'imdb_id';
+
     const movie = await Movie.findOne({
-      where: { tmdbID: id },
+      where: {[field]: id },
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       include: [
         {
@@ -60,57 +65,31 @@ exports.getLocalMovieByID = async (req, res, next) => {
       throw new MovieNotFoundError('Movie not found');
     }
     res.json(movie);
+  } catch (error){
+    console.log(error)
+    next(error);
   }
+}
 
-// Function to create or find the movie
-const createOrUpdateMovie = async (movieInfo) => {
-  const [movie] = await Movie.findOrCreate({
-    where: { tmdbID: movieInfo.id },
-    defaults: {
-      title: movieInfo.title,
-      release_date: movieInfo.release_date,
-      vote_average: movieInfo.vote_average,
-      imdb_id: movieInfo.imdb_id,
-    },
-  });
-  return movie;
-};
-
-// Function to save reviews to the database
-const saveReviews = async (movieId, reviews) => {
-  const transaction = await sequelize.transaction(); // Assuming you have a Sequelize instance named 'sequelize'
-
+exports.updateLocalMovieByID = async (req, res, next) =>{
   try {
-    await Promise.all(
-      reviews.map(async (review) => {
-        const { author, content, created_at, updated_at } = review;
-        const rev = await Review.create(
-          {
-            author: author,
-            content: content,
-            created_at: created_at,
-            updated_at: updated_at,
-          },
-          { transaction } // Pass the transaction to the create() method
-        );
-        await rev.setMovie(movieId, { transaction }); // Pass the transaction to setMovie() method
-      })
-    );
+    const { id } = req.params;
+    const { reviews } = req.body;
+    const field = typeof id === 'number' || !isNaN(parseInt(id)) ? 'tmdbID' : 'imdb_id';
 
-    await transaction.commit(); // Commit the transaction if everything is successful
+    // Find the movie by IMDb ID
+    const movie = await Movie.findOne({ where: { [field]: id} });
+
+    if (!movie) {
+      throw new MovieNotFoundError('Movie not found');
+    }
+
+    // // Create or update the reviews for the movie
+    await saveReviews(movie.id, reviews);
+
+    return res.json({ message: 'Movie reviews updated successfully' });
   } catch (error) {
-    await transaction.rollback(); // Rollback the transaction if an error occurs
-    throw new DatabaseWriteError('Error occurred while saving reviews to the database.');
+    next(error);
   }
-};
+}
 
-
-// Function to retrieve the movie with associated reviews
-const getMovieWithReviews = async (tmdbID) => {
-  const movieWithReviews = await Movie.findOne({
-    where: { tmdbID: tmdbID },
-    include: Review, // Include the Review model
-    attributes: { exclude: ['createdAt', 'updatedAt'] },
-  });
-  return movieWithReviews;
-};
