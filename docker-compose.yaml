@@ -1,5 +1,18 @@
 version: '3'
 services:
+  node-app:
+    env_file:
+    - .env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: movie_review_db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+
   db:
     image: postgres
     restart: always
@@ -9,7 +22,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: movie_review_db
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
 
@@ -19,18 +32,5 @@ services:
     ports:
       - 8080:8080
 
-  # node-app:
-  #   depends_on:
-  #   - db
-  #   env_file:
-  #   - .env
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_DB: movie_review_db
-  #     POSTGRES_PASSWORD: password
+volumes:
+  db_data:

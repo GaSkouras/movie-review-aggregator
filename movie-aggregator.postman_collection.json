@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/movies?title=Fight Club",
+					"raw": "http://localhost:3000/api/movies/tmdb?title=Fight Club",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -20,7 +20,8 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"movies"
+						"movies",
+						"tmdb"
 					],
 					"query": [
 						{
@@ -38,7 +39,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/movies/tmdb/697/reviews",
+					"raw": "http://localhost:3000/api/movies/tmdb/698/reviews",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -48,7 +49,7 @@
 						"api",
 						"movies",
 						"tmdb",
-						"697",
+						"698",
 						"reviews"
 					]
 				}
@@ -61,7 +62,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/movies/local/697/",
+					"raw": "http://localhost:3000/api/movies/local/698/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -71,7 +72,7 @@
 						"api",
 						"movies",
 						"local",
-						"697",
+						"698",
 						""
 					]
 				}

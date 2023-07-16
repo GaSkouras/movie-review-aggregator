@@ -15,14 +15,13 @@ app.use('/api', require('./routes/movie'));
 app.use(errorHandlingMiddleware);
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-    // Create the tables
-    sequelize.sync({ force: false })
-    .then(() => {
-      console.log('Tables created successfully.');
-    })
-    .catch((error) => {
-      console.error('Error creating tables:', error);
+sequelize.sync({ force: false })
+  .then(() => {
+    console.log('Tables created successfully.');
+    app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
     });
-});
+  })
+  .catch((error) => {
+    console.error('Error creating tables:', error);
+  });

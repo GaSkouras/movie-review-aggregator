@@ -39,7 +39,6 @@ The `movies` and `reviews` tables have a one-to-many relationship, where one mov
 
 ### Prerequisites
 
-- Node.js
 - Docker
 - Docker-Compose
 
@@ -56,7 +55,7 @@ The `movies` and `reviews` tables have a one-to-many relationship, where one mov
 
 3. Install dependencies:
 
-`npm install`
+`docker-compose --build`
 
 ### Configuration
 
@@ -74,8 +73,7 @@ DATABASE_PASSWORD = <YOUR DB PASSWORD>
 
 To start the application, run the following command:
 
-`npm start`
-
+`docker-compose up`
 
 The application will be running at `http://localhost:3000`.
 

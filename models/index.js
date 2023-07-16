@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres://postgres:password@localhost:5432/movie_review_db');
+const sequelize = new Sequelize('postgres://postgres:password@db:5432/movie_review_db');
 
 const Movie = sequelize.define('movie', {
   tmdbID: {
