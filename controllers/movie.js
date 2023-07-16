@@ -1,6 +1,6 @@
 const { searchMovieByTitle, fetchMovieReviews, searchMovieByID } = require('../services/imdbService');
 const { Movie, Review } = require('../models');
-const {MovieNotFoundError} =  require ("../error.js")
+const {MovieNotFoundError} =  require ("../errors/error.js")
 const {createOrUpdateMovie, saveReviews, getMovieWithReviews} = require("../utils/movieUtils")
 
 exports.getMoviesbyTitle = async (req, res, next) => {

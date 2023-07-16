@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const { sequelize } = require('./models');
-const errorHandlingMiddleware = require('./errorHandlingMiddleware');
+const errorHandlingMiddleware = require('./errors/errorHandlingMiddleware');
 
 // Middleware
 app.use(express.json());

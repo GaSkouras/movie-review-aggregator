@@ -1,6 +1,6 @@
 const { searchMovieByTitle, fetchMovieReviews, searchMovieByID } = require('../services/imdbService');
 const { Movie, Review, sequelize } = require('../models');
-const {MovieNotFoundError, DatabaseWriteError} =  require ("../error.js")
+const {MovieNotFoundError, DatabaseWriteError} =  require ("../errors/error.js")
 
 // Function to create or find the movie
 const createOrUpdateMovie = async (movieInfo) => {

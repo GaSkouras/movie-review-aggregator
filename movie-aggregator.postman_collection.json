@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "6c80fce8-c0f6-4b48-8de8-b41d9b6ac292",
+		"name": "movie-aggregator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12751323"
+	},
+	"item": [
+		{
+			"name": "API #1 - Search Movies:",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/movies?title=Fight Club",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Fight Club"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API #2 - Fetch Movie Reviews",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/movies/tmdb/697/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"movies",
+						"tmdb",
+						"697",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API #3 - View Movie Details and Reviews:",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/movies/local/697/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"movies",
+						"local",
+						"697",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API #4 - Update Movie Reviews:",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reviews\": [\n        {\n            \"author\": \"Takis\",\n            \"content\": \"Fantastic\"\n\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/movies/local/697/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"movies",
+						"local",
+						"697",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

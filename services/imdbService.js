@@ -1,7 +1,7 @@
 // services/imdbService.js
 require('dotenv').config();
 const axios = require('axios');
-const {ClientError} =  require ("../error.js")
+const {ClientError} =  require ("../errors/error.js")
 
 const API_KEY = process.env.API_KEY;
 const TMDB_BASIC_URL = process.env.TMDB_BASIC_URL
