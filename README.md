@@ -31,8 +31,7 @@ The application follows a layered architecture, separating concerns into differe
 
 ### Database Schema
 
-The database schema consists of two tables: `movies` and `reviews`. The `movies` table stores information about movies, such as their title, release date, vote average, and IMDb ID. The `reviews` table stores review details, including the author, content, and the associated movie's ID.
-
+The database schema consists of two tables: `movies` and `reviews`. The `movies` table stores information about movies, such as their title, release date, vote average, and IMDb ID. The `reviews` table stores review details, including the author, content, and the associated movie ID.
 The `movies` and `reviews` tables have a one-to-many relationship, where one movie can have multiple reviews. This relationship is established using foreign key constraints.
 
 ## Running the Application
@@ -51,7 +50,6 @@ The `movies` and `reviews` tables have a one-to-many relationship, where one mov
 2. Navigate to the project directory:
 
 `cd movie-review-aggregator`
-
 
 3. Install dependencies:
 
